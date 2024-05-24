@@ -20,6 +20,7 @@ urlpatterns = [
     # accounts
     path("accounts/login/", views.LoginView.as_view(), name="account_login"),
     path("accounts/", include("allauth.urls")),
+    path("accounts/", include("allauth.socialaccount.urls")),
     path("accounts/settings/", views.user_settings, name="settings"),
     path("accounts/delete-account/", views.delete_account, name="delete_account"),
     # core

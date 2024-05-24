@@ -1,4 +1,4 @@
-from appname.core.models import User
+from front_gate.core.models import User
 
 
 def test_create_user_username(db):

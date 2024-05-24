@@ -28,11 +28,21 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.sites",
     "django.contrib.flatpages",
-    "django.contrib.gis",
+    # "django.contrib.gis",
     "django.forms",
     "django_extensions",
     "allauth",
     "allauth.account",
+    "allauth.socialaccount",
+    # Include the providers you want
+    "allauth.socialaccount.providers.google",
+    "allauth.socialaccount.providers.microsoft",
+    "allauth.socialaccount.providers.facebook",
+    "allauth.socialaccount.providers.instagram",
+    "allauth.socialaccount.providers.snapchat",
+    "allauth.socialaccount.providers.linkedin_oauth2",
+    "allauth.socialaccount.providers.twitter_oauth2",
+    "allauth.socialaccount.providers.stackexchange",
     "rest_framework",
     "rest_framework.authtoken",
     "drf_spectacular",
@@ -44,7 +54,7 @@ INSTALLED_APPS = [
     "bx_django_utils",
     "huey_monitor",
     "dbbackup",
-    "appname.core",
+    "front_gate.core",
 ]
 
 if DEBUG:
@@ -84,7 +94,7 @@ if DEBUG:
     # as it can have unexpected behavior
     SILKY_ANALYZE_QUERIES = False
 
-ROOT_URLCONF = "appname.urls"
+ROOT_URLCONF = "front_gate.urls"
 
 TEMPLATES = [
     {
@@ -97,13 +107,13 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                "appname.core.context_processors.global_settings",
+                "front_gate.core.context_processors.global_settings",
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = "appname.wsgi.application"
+WSGI_APPLICATION = "front_gate.wsgi.application"
 
 # Database
 
@@ -138,6 +148,24 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 if DEBUG:
     AUTH_PASSWORD_VALIDATORS = []
+
+
+SOCIALACCOUNT_PROVIDERS = {
+    "facebook": {
+        "APP": {
+            "client_id": "1428004601481174",
+            "secret": "3ed738bb16e54f55759bdc29dfe34f20",
+            "key": "",
+        },
+        "SCOPE": [
+            "profile",
+            "email",
+        ],
+        "AUTH_PARAMS": {
+            "access_type": "online",
+        },
+    }
+}
 
 # Email
 
@@ -177,7 +205,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "core.User"
 
-FORM_RENDERER = "appname.core.forms.CustomFormRenderer"
+FORM_RENDERER = "front_gate.core.forms.CustomFormRenderer"
 
 # Static files
 
@@ -222,12 +250,12 @@ ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
-ACCOUNT_EMAIL_VERIFICATION = "optional"
+ACCOUNT_EMAIL_VERIFICATION = "none"
 ACCOUNT_EMAIL_SUBJECT_PREFIX = env.str("ALLAUTH_ACCOUNT_EMAIL_SUBJECT_PREFIX")
 
 ACCOUNT_FORMS = {
-    "login": "appname.core.forms.CustomLoginForm",
-    "signup": "appname.core.forms.AcceptTermsSignupForm",
+    "login": "front_gate.core.forms.CustomLoginForm",
+    "signup": "front_gate.core.forms.AcceptTermsSignupForm",
     "add_email": "allauth.account.forms.AddEmailForm",
     "change_password": "allauth.account.forms.ChangePasswordForm",
     "set_password": "allauth.account.forms.SetPasswordForm",
@@ -310,7 +338,7 @@ if not HUEY_DEV and DEBUG:
 SHELL_PLUS = "ipython"
 SHELL_PLUS_PRINT_SQL = True
 SHELL_PLUS_IMPORTS = [
-    "from appname.core.services.email import EmailService",
+    "from front_gate.core.services.email import EmailService",
 ]
 
 # Logging
@@ -432,7 +460,7 @@ LOGGING = {
         "huey": {
             "level": "INFO",
         },
-        "appname": {
+        "front_gate": {
             "level": "INFO",
         },
     },
@@ -449,7 +477,7 @@ if DEBUG:
         "handlers": ["console"],
         "level": "INFO",
     }
-    LOGGING["loggers"]["appname"] = {
+    LOGGING["loggers"]["front_gate"] = {
         "level": "DEBUG",
     }
     # Uncomment to log SQL statements to console

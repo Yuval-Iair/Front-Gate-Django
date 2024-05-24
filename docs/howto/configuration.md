@@ -53,7 +53,7 @@ DJANGO_EMAIL_HOST_PASSWORD=
 
 !!! info
 
-    The default email server values from `.env-example` refer to the local [Mailhog](https://github.com/mailhog/MailHog) instance that you can use to check outgoing email in development environment. If you 
+    The default email server values from `.env-example` refer to the local [Mailhog](https://github.com/mailhog/MailHog) instance that you can use to check outgoing email in development environment. If you
     want to test emails with MailHog you will need to set `SMTP_DEV=1` as env var and start local Mailhog with `docker compose up`.
 
 Replace to set default email prefix and origin address:
@@ -141,16 +141,16 @@ HUEY_DEV=1
 
 ## Rename app folder
 
-The main application folder is called `appname`. To rename it, you will also need to find and replace references to `appname` in the repository.
+The main application folder is called `front_gate`. To rename it, you will also need to find and replace references to `front_gate` in the repository.
 
 You can use these Bash commands in the root folder (replace `myapp` with your new name):
 
 ```bash
-sed -i 's/appname\./myapp\./g' `grep 'appname\.' -rl *`
-mv appname/ myapp/
+sed -i 's/front_gate\./myapp\./g' `grep 'front_gate\.' -rl *`
+mv front_gate/ myapp/
 ```
 
-Alternatively, find and replace `appname.` with `myapp.` in all project files in your editor of choice. Then rename the `appname` folder with `myapp`.
+Alternatively, find and replace `front_gate.` with `myapp.` in all project files in your editor of choice. Then rename the `front_gate` folder with `myapp`.
 
 ## Verify that everything works
 

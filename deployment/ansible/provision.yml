@@ -220,7 +220,7 @@
     - name: "Initialize PostgreSQL"
       shell: "postgresql-setup initdb"
       when: not postgres_data.stat.exists
- 
+
     - name: "Start and enable services"
       service: "name={{ item }} state=started enabled=yes"
       with_items:
@@ -312,7 +312,7 @@
           Group=caddy
           WorkingDirectory=/srv/{{ app_name }}
           ExecReload=/usr/local/bin/poetry run /bin/kill -s HUP $MAINPID
-          ExecStart=/usr/local/bin/poetry run gunicorn appname.wsgi:application --workers 2 --bind unix:/var/run/{{ app_name }}/app.sock --capture-output
+          ExecStart=/usr/local/bin/poetry run gunicorn front_gate.wsgi:application --workers 2 --bind unix:/var/run/{{ app_name }}/app.sock --capture-output
           KillMode=mixed
           TimeoutStopSec=5
           LimitNOFILE=4096
